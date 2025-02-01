@@ -40,13 +40,19 @@ export default function BenchmarkForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    router.push({
-      pathname: '/report',
-      query: formData
-    });
-  };
+ const handleSubmit = (e) => {
+  e.preventDefault();
+  
+  // Convert formData to a query string
+  const queryParams = new URLSearchParams(
+    Object.fromEntries(
+      Object.entries(formData).map(([key, value]) => [key, value.toString()])
+    )
+  ).toString();
+
+  // Navigate to report page with form data
+  router.push(`/report?${queryParams}`);
+};
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl mx-auto space-y-8">
